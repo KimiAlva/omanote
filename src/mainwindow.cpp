@@ -441,6 +441,7 @@ void MainWindow::addTab(Editor *ed, const QString &title) {
     m_tabs->setCurrentWidget(ed);
     connect(ed, &QPlainTextEdit::cursorPositionChanged, this, &MainWindow::updateStatus);
     connect(ed->document(), &QTextDocument::modificationChanged, this, [this](bool){ updateTitle(); });
+    connect(ed, &Editor::zoomChanged, this, [this](int size){ m_fontSize = size; saveSettings(); });
     connect(ed->document(), &QTextDocument::contentsChanged, this, [this, ed](){
         if (currentEditor() == ed) {
             if (m_docInfo) {

@@ -95,6 +95,20 @@ void Editor::setLineNumbersVisible(bool on) {
     viewport()->update();
 }
 
+void Editor::wheelEvent(QWheelEvent *e) {
+    if (e->modifiers() & Qt::ControlModifier) {
+        int delta = e->angleDelta().y() > 0 ? 1 : -1;
+        int size = font().pointSize();
+        if (size <= 0) size = 12;
+        size = qBound(6, size + delta, 48);
+        setFontFamily("Monospace", size);
+        emit zoomChanged(size);
+        e->accept();
+        return;
+    }
+    QPlainTextEdit::wheelEvent(e);
+}
+
 void Editor::setCursorPosition(int pos) {
     QTextCursor c = textCursor();
     c.setPosition(qBound(0, pos, document()->characterCount() - 1));

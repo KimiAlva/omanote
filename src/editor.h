@@ -11,7 +11,10 @@ class Editor : public QPlainTextEdit {
     Q_OBJECT
 public:
     explicit Editor(QWidget *parent = nullptr);
+signals:
+    void zoomChanged(int newSize);
 
+public:
     void setLanguage(const QString &lang);
     void setHighlightDefinition(const QString &fileName);
     QString highlightLanguageName() const;
@@ -49,6 +52,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void paintEvent(QPaintEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
 
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
