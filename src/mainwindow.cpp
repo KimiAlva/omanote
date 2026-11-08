@@ -828,7 +828,8 @@ void MainWindow::showPreferences() {
 }
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About Note"), tr("Note - a lightweight text editor for Omarchy."));
+    QMessageBox::about(this, tr("About Note"),
+        tr("Note %1 - a lightweight text editor for Omarchy.").arg(QApplication::applicationVersion()));
 }
 
 void MainWindow::updateTitle() {
