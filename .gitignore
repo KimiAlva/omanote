@@ -1,0 +1,7 @@
+build/
+*.o
+Makefile
+pkg/
+*.pkg.tar.zst
+src/moc_*.cpp
+.qmake.stash

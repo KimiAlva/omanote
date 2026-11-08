@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Note
+Comment=A lightweight text editor for Omarchy
+Exec=note %F
+Icon=note
+Terminal=false
+Categories=TextEditor;Utility;
+MimeType=text/plain;
+StartupNotify=true
+StartupWMClass=note

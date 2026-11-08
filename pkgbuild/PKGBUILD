@@ -1,0 +1,26 @@
+pkgname=note
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="A lightweight text editor for Omarchy"
+arch=('x86_64' 'aarch64')
+url="https://github.com/varo/note"
+license=('MIT')
+depends=('qt6-base' 'qt6-wayland' 'syntax-highlighting')
+makedepends=('base-devel' 'qt6-base' 'syntax-highlighting')
+source=()
+options=('!strip')
+
+build() {
+    cd "$startdir/.."
+    /usr/lib/qt6/bin/lrelease translations/note_de.ts -qm build/note_de.qm
+    qmake6 note.pro
+    make -j"$(nproc)"
+}
+
+package() {
+    cd "$startdir/.."
+    install -Dm755 build/note "$pkgdir/usr/bin/note"
+    install -Dm644 "$startdir/note.desktop" "$pkgdir/usr/share/applications/note.desktop"
+    install -Dm644 "$startdir/note.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/note.svg"
+    install -Dm644 build/note_de.qm "$pkgdir/usr/share/note/translations/note_de.qm"
+}
