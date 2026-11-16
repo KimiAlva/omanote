@@ -1,9 +1,9 @@
 QT += widgets printsupport
+CONFIG += c++17
+TARGET = omanote
+TEMPLATE = app
 INCLUDEPATH += /usr/include/KF6/KSyntaxHighlighting
 LIBS += -lKF6SyntaxHighlighting
-CONFIG += c++17
-TARGET = note
-TEMPLATE = app
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
@@ -18,7 +18,7 @@ HEADERS += \
     src/theme.h \
     src/findreplace.h
 RESOURCES += src/resources.qrc
-TRANSLATIONS += translations/note_de.ts
+TRANSLATIONS += translations/omanote_de.ts
 DESTDIR = build
 OBJECTS_DIR = build/obj
 MOC_DIR = build/moc

@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=Note
+Name=Omanote
 Comment=A lightweight text editor for Omarchy
-Exec=note %F
-Icon=note
+Exec=omanote %F
+Icon=omanote
 Terminal=false
 Categories=TextEditor;Utility;
 MimeType=text/plain;
 StartupNotify=true
-StartupWMClass=note
+StartupWMClass=omanote

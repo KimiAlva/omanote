@@ -354,14 +354,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Empty first tab
     newFile();
 
-    QSettings gs("omarchy", "note");
+    QSettings gs("omarchy", "omanote");
     if (gs.contains("geometry"))
         restoreGeometry(gs.value("geometry").toByteArray());
     else
         resize(900, 650);
     if (gs.contains("windowState"))
         restoreState(gs.value("windowState").toByteArray());
-    setWindowTitle("Note");
+    setWindowTitle("Omanote");
 }
 
 Editor *MainWindow::currentEditor() const {
@@ -424,7 +424,7 @@ bool MainWindow::saveFile(Editor *ed, const QString &path) {
     if (idx >= 0) m_tabs->setTabText(idx, QFileInfo(path).fileName());
     ed->setProperty("filePath", path);
     if (m_restoreCursorPosition) {
-        QSettings s("omarchy", "note");
+        QSettings s("omarchy", "omanote");
         s.setValue("cursor/" + path, ed->cursorPosition());
     }
     addToRecentFiles(path);
@@ -522,7 +522,7 @@ void MainWindow::openFile(const QString &path) {
     if (idx >= 0) m_tabs->setTabText(idx, QFileInfo(path).fileName());
     setEditorLanguage(ed, path);
     if (m_restoreCursorPosition) {
-        QSettings s("omarchy", "note");
+        QSettings s("omarchy", "omanote");
         int pos = s.value("cursor/" + path, -1).toInt();
         if (pos >= 0) ed->setCursorPosition(pos);
     }
@@ -594,7 +594,7 @@ void MainWindow::currentChanged(int /*index*/) {
 }
 
 void MainWindow::loadSettings() {
-    QSettings s("omarchy", "note");
+    QSettings s("omarchy", "omanote");
     m_fontSize = s.value("fontSize", 12).toInt();
     m_wrap = s.value("wrap", false).toBool();
     m_wrapMode = s.value("wrapMode", m_wrap ? 1 : 0).toInt();
@@ -623,7 +623,7 @@ void MainWindow::loadSettings() {
 }
 
 void MainWindow::saveSettings() {
-    QSettings s("omarchy", "note");
+    QSettings s("omarchy", "omanote");
     s.setValue("fontSize", m_fontSize);
     s.setValue("wrap", m_wrap);
     s.setValue("wrapMode", m_wrapMode);
@@ -870,8 +870,8 @@ void MainWindow::showPreferences() {
 }
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About Note"),
-        tr("Note %1 - a lightweight text editor for Omarchy.").arg(QApplication::applicationVersion()));
+    QMessageBox::about(this, tr("About Omanote"),
+        tr("Omanote %1 - a lightweight text editor for Omarchy.").arg(QApplication::applicationVersion()));
 }
 
 void MainWindow::updateTitle() {
@@ -882,7 +882,7 @@ void MainWindow::updateTitle() {
         name = p.isEmpty() ? "Untitled" : QFileInfo(p).fileName();
         if (ed->document()->isModified()) name += " *";
     }
-    setWindowTitle(name + " - Note");
+    setWindowTitle(name + " - Omanote");
 }
 
 void MainWindow::updateStatus() {
@@ -921,7 +921,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         Editor *ed = qobject_cast<Editor*>(m_tabs->widget(i));
         if (!maybeSave(ed)) { event->ignore(); return; }
     }
-    QSettings gs("omarchy", "note");
+    QSettings gs("omarchy", "omanote");
     gs.setValue("geometry", saveGeometry());
     gs.setValue("windowState", saveState());
     event->accept();

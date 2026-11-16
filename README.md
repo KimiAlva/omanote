@@ -1,4 +1,4 @@
-# Note
+# Omanote
 
 A lightweight text editor for Omarchy.
 
@@ -41,7 +41,7 @@ A lightweight text editor for Omarchy.
 Or install the prebuilt package from the latest release:
 
 ```bash
-pkexec pacman -U note-<version>-1-x86_64.pkg.tar.zst
+pkexec pacman -U omanote-<version>-1-x86_64.pkg.tar.zst
 ```
 
 ## Dependencies

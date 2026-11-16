@@ -1,26 +1,24 @@
-pkgname=note
+pkgname=omanote
 pkgver=0.3.0
 pkgrel=1
 pkgdesc="A lightweight text editor for Omarchy"
 arch=('x86_64' 'aarch64')
-url="https://github.com/varo/note"
+url="https://github.com/KimiAlva/omanote"
 license=('MIT')
 depends=('qt6-base' 'qt6-wayland' 'syntax-highlighting')
-makedepends=('base-devel' 'qt6-base' 'syntax-highlighting')
-source=()
-options=('!strip')
+makedepends=('base-devel' 'qt6-base' 'syntax-highlighting' 'qt6-tools')
 
 build() {
     cd "$startdir/.."
-    /usr/lib/qt6/bin/lrelease translations/note_de.ts -qm build/note_de.qm
-    qmake6 note.pro
+    /usr/lib/qt6/bin/lrelease translations/omanote_de.ts -qm build/omanote_de.qm
+    qmake6 omanote.pro
     make -j"$(nproc)"
 }
 
 package() {
     cd "$startdir/.."
-    install -Dm755 build/note "$pkgdir/usr/bin/note"
-    install -Dm644 "$startdir/note.desktop" "$pkgdir/usr/share/applications/note.desktop"
-    install -Dm644 "$startdir/note.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/note.svg"
-    install -Dm644 build/note_de.qm "$pkgdir/usr/share/note/translations/note_de.qm"
+    install -Dm755 build/omanote "$pkgdir/usr/bin/omanote"
+    install -Dm644 "$startdir/omanote.desktop" "$pkgdir/usr/share/applications/omanote.desktop"
+    install -Dm644 "$startdir/omanote.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/omanote.svg"
+    install -Dm644 build/omanote_de.qm "$pkgdir/usr/share/omanote/translations/omanote_de.qm"
 }
