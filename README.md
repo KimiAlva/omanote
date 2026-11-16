@@ -2,7 +2,7 @@
 
 A lightweight text editor for Omarchy.
 
-![Note](docs/screenshot-v0.3.0.png)
+![Note](docs/screenshot-en.png)
 
 ## Features
 
