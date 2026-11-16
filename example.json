@@ -1,0 +1,17 @@
+{
+  "name": "Note",
+  "version": "0.3.0",
+  "description": "A lightweight text editor for Omarchy",
+  "features": [
+    "Tabbed editing",
+    "Syntax highlighting",
+    "Find and replace",
+    "Omarchy theme following"
+  ],
+  "settings": {
+    "tabSize": 4,
+    "insertSpaces": true,
+    "autoIndent": false,
+    "wrapMode": "word"
+  }
+}
