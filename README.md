@@ -55,7 +55,9 @@ cd omanote
 Or install the prebuilt package from the latest release:
 
 ```bash
-pkexec pacman -U omanote-<version>-1-x86_64.pkg.tar.zst
+# download latest release asset
+gh release download --repo KimiAlva/omanote --pattern 'omanote-*-x86_64.pkg.tar.zst'
+pkexec pacman -U omanote-*-x86_64.pkg.tar.zst
 ```
 
 ## Dependencies
