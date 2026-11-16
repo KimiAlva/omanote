@@ -75,6 +75,7 @@ private:
     FindReplaceDialog *m_findDlg = nullptr;
     QLabel *m_status;
     bool m_wrap = false;
+    int m_wrapMode = 0; // 0 none,1 word,2 char,3 word-char
     int m_fontSize = 12;
 
     // Xed-like settings

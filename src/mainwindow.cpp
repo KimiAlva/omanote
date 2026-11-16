@@ -267,10 +267,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     actMargin->setCheckable(true);
     actMargin->setChecked(m_rightMargin);
     connect(actMargin, &QAction::toggled, this, [this](bool on){ m_rightMargin = on; saveSettings(); for (int i=0;i<m_tabs->count();i++) if (auto e=qobject_cast<Editor*>(m_tabs->widget(i))) e->setRightMargin(on, m_rightMarginColumn); });
-    QAction *actWrap = view->addAction(tr("&Word Wrap"));
-    actWrap->setCheckable(true);
-    actWrap->setChecked(m_wrap);
-    connect(actWrap, &QAction::toggled, this, [this](bool on){ m_wrap = on; saveSettings(); for (int i=0;i<m_tabs->count();i++) if (auto e=qobject_cast<Editor*>(m_tabs->widget(i))) e->setWordWrapMode(on ? QTextOption::WrapAtWordBoundaryOrAnywhere : QTextOption::NoWrap); });
+    QMenu *wrapMenu = view->addMenu(tr("&Wrap Mode"));
+    QActionGroup *wrapGroup = new QActionGroup(this);
+    wrapGroup->setExclusive(true);
+    QStringList wrapLabels = {tr("None"), tr("Word"), tr("Char"), tr("Word-Char")};
+    for (int i = 0; i < wrapLabels.size(); i++) {
+        QAction *a = wrapMenu->addAction(wrapLabels[i]);
+        a->setCheckable(true);
+        a->setChecked(i == m_wrapMode);
+        wrapGroup->addAction(a);
+        connect(a, &QAction::triggered, this, [this, i](){
+            m_wrapMode = i;
+            m_wrap = (i != 0);
+            saveSettings();
+            QTextOption::WrapMode wm = QTextOption::NoWrap;
+            if (i == 1) wm = QTextOption::WordWrap;
+            else if (i == 2) wm = QTextOption::WrapAnywhere;
+            else if (i == 3) wm = QTextOption::WrapAtWordBoundaryOrAnywhere;
+            for (int j = 0; j < m_tabs->count(); j++)
+                if (auto e = qobject_cast<Editor*>(m_tabs->widget(j)))
+                    e->setWordWrapMode(wm);
+        });
+    }
     // word wrap handled above
     view->addSeparator();
     QAction *actSide = view->addAction(tr("Side &Panel"));
@@ -432,7 +450,12 @@ void MainWindow::applySettingsToEditor(Editor *ed) {
     ed->setAutoBracketCompletion(m_autoBracketCompletion);
     ed->setSyntaxHighlighting(m_syntaxHighlighting);
     ed->setSmartHomeEnd(m_smartHomeEnd);
-    ed->setWordWrapMode(m_wrap ? QTextOption::WrapAtWordBoundaryOrAnywhere : QTextOption::NoWrap);
+    QTextOption::WrapMode wm = QTextOption::NoWrap;
+    if (m_wrapMode == 1) wm = QTextOption::WordWrap;
+    else if (m_wrapMode == 2) wm = QTextOption::WrapAnywhere;
+    else if (m_wrapMode == 3) wm = QTextOption::WrapAtWordBoundaryOrAnywhere;
+    ed->setWordWrapMode(wm);
+    m_wrap = (m_wrapMode != 0);
 }
 
 void MainWindow::addTab(Editor *ed, const QString &title) {
@@ -564,6 +587,7 @@ void MainWindow::loadSettings() {
     QSettings s("omarchy", "note");
     m_fontSize = s.value("fontSize", 12).toInt();
     m_wrap = s.value("wrap", false).toBool();
+    m_wrapMode = s.value("wrapMode", m_wrap ? 1 : 0).toInt();
     m_lineNumbers = s.value("lineNumbers", true).toBool();
     m_highlightCurrentLine = s.value("highlightCurrentLine", true).toBool();
     m_bracketMatching = s.value("bracketMatching", false).toBool();
@@ -592,6 +616,7 @@ void MainWindow::saveSettings() {
     QSettings s("omarchy", "note");
     s.setValue("fontSize", m_fontSize);
     s.setValue("wrap", m_wrap);
+    s.setValue("wrapMode", m_wrapMode);
     s.setValue("lineNumbers", m_lineNumbers);
     s.setValue("highlightCurrentLine", m_highlightCurrentLine);
     s.setValue("bracketMatching", m_bracketMatching);
