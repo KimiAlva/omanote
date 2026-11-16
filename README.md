@@ -54,9 +54,16 @@ cd omanote
 
 Or install the prebuilt package from the latest release:
 
+Using GitHub CLI (if installed):
 ```bash
-# download latest release asset
 gh release download --repo KimiAlva/omanote --pattern 'omanote-*-x86_64.pkg.tar.zst'
+pkexec pacman -U omanote-*-x86_64.pkg.tar.zst
+```
+
+Using curl + Python (no extra tools):
+```bash
+URL=$(curl -s https://api.github.com/repos/KimiAlva/omanote/releases/latest | python3 -c "import sys,json; print([a['browser_download_url'] for a in json.load(sys.stdin)['assets'] if a['name'].endswith('.pkg.tar.zst')][0])")
+curl -LO "$URL"
 pkexec pacman -U omanote-*-x86_64.pkg.tar.zst
 ```
 
