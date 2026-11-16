@@ -27,6 +27,7 @@
 #include <QTreeView>
 #include <QFileSystemModel>
 #include <QLabel>
+#include <QToolButton>
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -159,7 +160,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     m_theme = new Theme(this);
     loadSettings();
     m_tabs = new QTabWidget(this);
-    m_tabs->setTabsClosable(true);
+    m_tabs->setTabsClosable(false);
     m_tabs->setMovable(true);
     setCentralWidget(m_tabs);
 
@@ -476,6 +477,15 @@ void MainWindow::addTab(Editor *ed, const QString &title) {
         }
     });
     setEditorLanguage(ed, ed->property("filePath").toString());
+    // custom close button
+    QToolButton *closeBtn = new QToolButton(this);
+    closeBtn->setText(QString::fromUtf8("\xC3\x97")); // ×
+    closeBtn->setAutoRaise(true);
+    m_tabs->tabBar()->setTabButton(m_tabs->indexOf(ed), QTabBar::RightSide, closeBtn);
+    connect(closeBtn, &QToolButton::clicked, this, [this, ed](){
+        int idx = m_tabs->indexOf(ed);
+        if (idx >= 0) closeTab(idx);
+    });
     applyTheme();
 }
 
@@ -681,6 +691,12 @@ void MainWindow::applyTheme() {
         if (auto e = qobject_cast<Editor*>(m_tabs->widget(i))) {
             e->setCurrentLineHighlight(hl);
             e->refreshHighlightTheme();
+        }
+        if (QToolButton *b = qobject_cast<QToolButton*>(m_tabs->tabBar()->tabButton(i, QTabBar::RightSide))) {
+            b->setStyleSheet(QString(
+                "QToolButton { color: %1; background: transparent; border: none; padding: 0px 4px; font-weight: bold; }"
+                "QToolButton:hover { color: %2; background: %3; border-radius: 4px; }")
+                .arg(fg.name(), acc.name(), m_theme->muted().name()));
         }
     }
 }
