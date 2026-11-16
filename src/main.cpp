@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
     QStringList paths = {
         app.applicationDirPath(),
         "/usr/share/omanote/translations",
-        "/home/varo/Work/note/build"
+        "./build"
     };
     for (const QString &p : paths) {
         if (translator.load("omanote_" + lang, p) ||
