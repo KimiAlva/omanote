@@ -32,11 +32,23 @@ A lightweight text editor for Omarchy.
 ./build/note
 ```
 
-## Install
+## Install (from source)
 
 ```bash
 ./bin/install
 ```
+
+Or install the prebuilt package from the latest release:
+
+```bash
+pkexec pacman -U note-<version>-1-x86_64.pkg.tar.zst
+```
+
+## Dependencies
+
+- qt6-base
+- qt6-wayland
+- syntax-highlighting (KSyntaxHighlighting)
 
 ## Shortcuts
 
