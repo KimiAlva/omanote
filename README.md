@@ -29,7 +29,7 @@ A lightweight text editor for Omarchy.
 
 ```bash
 ./bin/build
-./build/note
+./build/omanote
 ```
 
 ## Install (from source)
