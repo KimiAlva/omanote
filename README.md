@@ -38,7 +38,18 @@ cd omanote
 
 ```bash
 ./bin/build
+```
+
+## Run
+
+```bash
 ./build/omanote
+```
+
+## Install (from source)
+
+```bash
+./bin/install
 ```
 
 ## Install (from source)
