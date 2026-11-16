@@ -25,6 +25,15 @@ A lightweight text editor for Omarchy.
 - Preferences dialog
 - Omarchy theme following (accent, rounding, dark mode)
 
+## Quick Start
+
+```bash
+git clone https://github.com/KimiAlva/omanote.git
+cd omanote
+./bin/build
+./build/omanote
+```
+
 ## Build
 
 ```bash
