@@ -52,12 +52,6 @@ cd omanote
 ./bin/install
 ```
 
-## Install (from source)
-
-```bash
-./bin/install
-```
-
 Or install the prebuilt package from the latest release:
 
 ```bash
