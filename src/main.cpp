@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     app.setApplicationName("note");
     app.setApplicationDisplayName("Note");
-    app.setApplicationVersion("0.2.0");
+    app.setApplicationVersion("0.3.0");
     app.setDesktopFileName("note");
     app.setOrganizationName("omarchy");
 
